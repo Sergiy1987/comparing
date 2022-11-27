@@ -42,6 +42,7 @@ public class SdkTest {
     );
   }
 
+
   @ParameterizedTest(name = "Run {index}: {1} {2}, {0}:{3}, {4}")
   @MethodSource("crossBrowserData")
   public void takesLocalAppSnapshotWithProvidedName(String browserName, String platform,
