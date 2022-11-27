@@ -34,11 +34,11 @@ public class SdkTest {
 
   private static Stream<Arguments> crossBrowserData() {
     return Stream.of(
-            arguments("Chrome", "Windows", "10", "latest", "1280x1024", "Chrome_latest_Windows_10_1280x1024")
-//            arguments("Chrome", "Windows", "11", "latest", "1280x1024", "Chrome_latest_Windows_11_1280x1024"),
-//            arguments("Firefox", "Windows", "10", "latest", "1280x1024", "Firefox_latest_Windows_10_1280x1024"),
-//            arguments("Safari", "OS X", "Ventura", "latest", "1280x1024", "Safari_latest_Ventura_1280x1024"),
-//            arguments("Chrome", "OS X", "Monterey", "latest", "1280x1024", "Chrome_latest_Monterey_1280x1024")
+            arguments("Chrome", "Windows", "10", "latest", "1280x1024", "Chrome_latest_Windows_10_1280x1024"),
+            arguments("Chrome", "Windows", "11", "latest", "1280x1024", "Chrome_latest_Windows_11_1280x1024"),
+            arguments("Firefox", "Windows", "10", "latest", "1280x1024", "Firefox_latest_Windows_10_1280x1024"),
+            arguments("Safari", "OS X", "Ventura", "latest", "1280x1024", "Safari_latest_Ventura_1280x1024"),
+            arguments("Chrome", "OS X", "Monterey", "latest", "1280x1024", "Chrome_latest_Monterey_1280x1024")
     );
   }
 
