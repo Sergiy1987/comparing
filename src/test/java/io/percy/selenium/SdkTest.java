@@ -18,7 +18,6 @@ import java.util.stream.Stream;
 @ExtendWith({TestResultLoggerExtension.class})
 public class SdkTest extends AbstractTestBase {
   private TestInfo testInfo;
-  private Percy percy;
 
   @BeforeEach
   protected void init(TestInfo testInfo) {
@@ -27,11 +26,11 @@ public class SdkTest extends AbstractTestBase {
 
   private static Stream<Arguments> arguments() {
     return Stream.of(
-            Arguments.of(BrowserName.Chrome.name(), "Windows", "10", "latest", "1280x1024", "Chrome_latest_Windows_10_1280x1024")
-//            Arguments.of(BrowserName.Chrome.name(), "Windows", "11", "latest", "1280x1024", "Chrome_latest_Windows_11_1280x1024"),
-//            Arguments.of(BrowserName.Firefox.name(), "Windows", "10", "latest", "1280x1024", "Firefox_latest_Windows_10_1280x1024"),
-//            Arguments.of(BrowserName.Safari.name(), "OS X", "Ventura", "latest", "1280x1024", "Safari_latest_Ventura_1280x1024"),
-//            Arguments.of(BrowserName.Chrome.name(), "OS X", "Monterey", "latest", "1280x1024", "Chrome_latest_Monterey_1280x1024")
+            Arguments.of(BrowserName.Chrome.name(), "10", "latest", "1280x1024", "Chrome_latest_Windows_10_1280x1024"),
+            Arguments.of(BrowserName.Chrome.name(), "Windows", "11", "latest", "1280x1024", "Chrome_latest_Windows_11_1280x1024"),
+            Arguments.of(BrowserName.Firefox.name(), "Windows", "10", "latest", "1280x1024", "Firefox_latest_Windows_10_1280x1024"),
+            Arguments.of(BrowserName.Safari.name(), "OS X", "Ventura", "latest", "1280x1024", "Safari_latest_Ventura_1280x1024"),
+            Arguments.of(BrowserName.Chrome.name(), "OS X", "Monterey", "latest", "1280x1024", "Chrome_latest_Monterey_1280x1024")
     );
   }
 
@@ -53,9 +52,8 @@ public class SdkTest extends AbstractTestBase {
     AbstractTestBase.setUpDriver(browserName, platform, platformVersion, testInfo, browserVersion, screenResolution);
     Selenide.open("https://www.browserstack.com/");
     Selenide.sleep(5000);
-    percy = new Percy(WebDriverRunner.getWebDriver());
+    //percy = new Percy(WebDriverRunner.getWebDriver());
     percy.snapshot(deviceName, Arrays.asList(1280, 768, 375), 1024, true);
-    //driver.quit();
   }
 
   @Test

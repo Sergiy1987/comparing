@@ -16,6 +16,7 @@ import java.util.Date;
 
 public abstract class AbstractTestBase {
     protected static RemoteWebDriver driver;
+    protected static Percy percy;
 
     private static final String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
@@ -27,12 +28,15 @@ public abstract class AbstractTestBase {
         MutableCapabilities browserOptions = setBrowserOptions(browserName, browserVersion);
         MutableCapabilities browserstackOptions = setBrowserStackOptions(platform, platformVersion, testInfo, screenResolution);
         browserOptions.setCapability("bstack:options", browserstackOptions);
+        System.out.println("browserName = " + browserName);
+        System.out.println("browserOptions = " + browserOptions);
 
         String hubUrl = System.getProperty(Properties.BROWSER_STACK_USER_NAME) + ":" +
                 System.getProperty(Properties.BROWSER_STACK_API_KEY) + System.getProperty(Properties.BROWSER_STACK_HUB_URL);
 
         driver = new RemoteWebDriver(new URL(hubUrl), browserOptions);
         WebDriverRunner.setWebDriver(driver);
+        percy = new Percy(WebDriverRunner.getAndCheckWebDriver());
     }
 
 
