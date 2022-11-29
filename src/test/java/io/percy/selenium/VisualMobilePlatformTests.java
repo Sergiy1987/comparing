@@ -1,14 +1,6 @@
 package io.percy.selenium;
-import org.openqa.selenium.MutableCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
-
-public class VisualMobilePlatformTests extends AbstractTestBase {
+public class VisualMobilePlatformTests extends TestResultLoggerExtension {
 /*
     @Parameterized.Parameter
     public String browserName;
