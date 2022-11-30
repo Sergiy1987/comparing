@@ -73,6 +73,8 @@ public class AbstractTestBase {
         browserstackOptions.setCapability("video", "false");
         browserstackOptions.setCapability("seleniumVersion", "4.1.0");
         browserstackOptions.setCapability("telemetryLogs", "true");
+        browserstackOptions.setCapability("localProxyHost", "127.0.0.1");
+        browserstackOptions.setCapability("localProxyPort", "8080");
         return browserstackOptions;
     }
 
