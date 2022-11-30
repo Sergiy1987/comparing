@@ -10,7 +10,6 @@ import java.util.Properties;
 
 @UtilityClass
 public final class PropertiesLoader {
-
     private static final Logger logger = LoggerFactory.getLogger(PropertiesLoader.class);
 
     public static void loadProperties() {
@@ -32,7 +31,7 @@ public final class PropertiesLoader {
     private static void saveToSystemProperties(Properties properties) {
         properties.stringPropertyNames().forEach(propertyName -> {
             if (!System.getProperties().containsKey(propertyName)) {
-                logger.info("PropertyName: {}, PropertyValue: {}", propertyName, properties.getProperty(propertyName));
+                //logger.info("PropertyName: {}, PropertyValue: {}", propertyName, properties.getProperty(propertyName));
                 System.setProperty(propertyName, properties.getProperty(propertyName));
             }
         });

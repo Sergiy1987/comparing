@@ -1,11 +1,18 @@
-package io.percy.selenium;
+package io.percy.selenium.testBase;
 
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
+import io.percy.selenium.Percy;
 import io.percy.selenium.core.properties.Properties;
 import io.percy.selenium.core.properties.PropertiesLoader;
+import io.percy.selenium.flow.basePageFlow.InitFlow;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.MutableCapabilities;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -14,7 +21,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public abstract class AbstractTestBase {
+@Slf4j
+public class AbstractTestBase {
     protected static RemoteWebDriver driver;
     protected static Percy percy;
 
@@ -22,7 +30,7 @@ public abstract class AbstractTestBase {
 
     public static void setUpDriver(String browserName, String platform,
                                    String platformVersion, TestInfo testInfo,
-                                   String browserVersion, String screenResolution) throws MalformedURLException {
+                                   String browserVersion, String screenResolution) {
         PropertiesLoader.loadProperties();
 
         MutableCapabilities browserOptions = setBrowserOptions(browserName, browserVersion);
@@ -33,10 +41,17 @@ public abstract class AbstractTestBase {
 
         String hubUrl = System.getProperty(Properties.BROWSER_STACK_USER_NAME) + ":" +
                 System.getProperty(Properties.BROWSER_STACK_API_KEY) + System.getProperty(Properties.BROWSER_STACK_HUB_URL);
-
-        driver = new RemoteWebDriver(new URL(hubUrl), browserOptions);
+        Configuration.baseUrl = System.getProperty(Properties.STAGE_OT_URL);
+        Configuration.timeout = 10000;
+        try {
+            driver = new RemoteWebDriver(new URL(hubUrl), browserOptions);
+            //new ChromeDriver((ChromeOptions) browserOptions);
+        } catch (MalformedURLException e) {
+           log.error(e.getMessage());
+        }
         WebDriverRunner.setWebDriver(driver);
         percy = new Percy(WebDriverRunner.getAndCheckWebDriver());
+        Selenide.open(System.getProperty(Properties.STAGE_OT_URL));
     }
 
 

@@ -1,5 +1,7 @@
 package io.percy.selenium;
 
+import io.percy.selenium.logger.TestResultLoggerExtension;
+
 public class VisualMobilePlatformTests extends TestResultLoggerExtension {
 /*
     @Parameterized.Parameter
