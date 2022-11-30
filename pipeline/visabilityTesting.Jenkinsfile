@@ -51,6 +51,7 @@
                         sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test'
                         }
                         browserStackReportPublisher 'automate'
+                        junit testDataPublishers: [[$class: 'AutomateTestDataPublisher']], testResults: 'target/surefire-reports/TEST-*.xml'
                     }
                 }
             }
