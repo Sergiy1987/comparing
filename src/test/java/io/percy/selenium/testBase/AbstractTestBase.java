@@ -63,7 +63,7 @@ public class AbstractTestBase {
         browserstackOptions.setCapability("os", platform);
         browserstackOptions.setCapability("osVersion", platformVersion);
         browserstackOptions.setCapability("projectName", testInfo.getDisplayName());
-        browserstackOptions.setCapability("buildName", buildName);
+        browserstackOptions.setCapability("buildName", "Visibility_testing");//buildName
         browserstackOptions.setCapability("sessionName", "");
         browserstackOptions.setCapability("resolution", screenResolution);
         browserstackOptions.setCapability("local", "false");
