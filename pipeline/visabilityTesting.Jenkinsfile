@@ -59,16 +59,16 @@
         post {
             unstable {
                 script {
-                    mail to: "sergiys@route4me.com, arturm@route4me.com, max@route4me.com, ezz@route4me.com",
-                    //mail to: "sergiys@route4me.com, max@route4me.com, ezz@route4me.com",
+                    //mail to: "sergiys@route4me.com, arturm@route4me.com, max@route4me.com, ezz@route4me.com",
+                    mail to: "sergiys@route4me.com",
                     subject: "Production ${currentBuild.currentResult} Pipeline: ${currentBuild.fullDisplayName}",
                     body: "Production Build ${currentBuild.fullDisplayName} is finished with status ${currentBuild.currentResult}. Test results are attached ${env.BUILD_URL}allure"
                 }
             }
             failure {
                 script {
-                    mail to: "sergiys@route4me.com, arturm@route4me.com, max@route4me.com, ezz@route4me.com",
-                    //mail to: "sergiys@route4me.com, max@route4me.com, ezz@route4me.com",
+                    //mail to: "sergiys@route4me.com, arturm@route4me.com, max@route4me.com, ezz@route4me.com",
+                    mail to: "sergiys@route4me.com",
                     subject: "Production ${currentBuild.currentResult} Pipeline: ${currentBuild.fullDisplayName}",
                     body: "Production Build ${currentBuild.fullDisplayName} is finished with status ${currentBuild.currentResult}. Test results are attached ${env.BUILD_URL}allure"
                 }
