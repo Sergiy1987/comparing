@@ -56,7 +56,7 @@
                         allure([includeProperties: false,jdk: '',
                         properties: [[key: 'allure.issues.tracker.pattern', value: 'https://route4me.atlassian.net/browse/%s']],
                         reportBuildPolicy: 'ALWAYS',
-                        results: [[path: 'allure-results']]])
+                        results: [[path: 'target/allure-results']]])
                     }
                 }
             }
