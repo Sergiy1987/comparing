@@ -52,24 +52,28 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
         logger.info("Test Disabled for {}: with reason :- {}", context.getDisplayName(), reason.orElse("Disabled"));
         testResultsStatus.add(TestResultStatus.DISABLED);
+        TestWatcher.super.testDisabled(context, reason);
     }
 
     @Override
     public void testSuccessful(ExtensionContext context) {
         logger.info("Test Successful for {}: ", context.getDisplayName());
         testResultsStatus.add(TestResultStatus.SUCCESSFUL);
+        TestWatcher.super.testSuccessful(context);
     }
 
     @Override
     public void testAborted(ExtensionContext context, Throwable cause) {
-        logger.info("Test Aborted for test {}: ", context.getDisplayName());
+        logger.info("Test Aborted for {}: ", context.getDisplayName());
         testResultsStatus.add(TestResultStatus.ABORTED);
+        TestWatcher.super.testAborted(context, cause);
     }
 
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
-        logger.info("Test Failed for test {}: ", context.getDisplayName());
+        logger.info("Test Failed for {}: ", context.getDisplayName());
         testResultsStatus.add(TestResultStatus.FAILED);
+        TestWatcher.super.testFailed(context, cause);
     }
 
     private Method getTestMethodName(ExtensionContext context) {

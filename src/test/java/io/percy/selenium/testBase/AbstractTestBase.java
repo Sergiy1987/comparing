@@ -16,10 +16,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 @Slf4j
 public class AbstractTestBase {
@@ -32,7 +34,7 @@ public class AbstractTestBase {
                                    String platformVersion, TestInfo testInfo,
                                    String browserVersion, String screenResolution) {
         PropertiesLoader.loadProperties();
-
+        setEnv("PERCY_TOKEN", "daa6c215ff1261f935236c4084944d7dd076d48392588c0d34210791d1d51223");
         MutableCapabilities browserOptions = setBrowserOptions(browserName, browserVersion);
         MutableCapabilities browserstackOptions = setBrowserStackOptions(platform, platformVersion, testInfo, screenResolution);
         browserOptions.setCapability("bstack:options", browserstackOptions);
@@ -50,8 +52,8 @@ public class AbstractTestBase {
            log.error(e.getMessage());
         }
         WebDriverRunner.setWebDriver(driver);
-        percy = new Percy(WebDriverRunner.getAndCheckWebDriver());
-        Selenide.open(System.getProperty(Properties.STAGE_OT_URL));
+        percy = new Percy(driver);//WebDriverRunner.getAndCheckWebDriver()
+        //Selenide.open(System.getProperty(Properties.STAGE_OT_URL));
     }
 
 
@@ -84,6 +86,19 @@ public class AbstractTestBase {
     @AfterAll
     public static void closeDriver() {
         WebDriverRunner.getWebDriver().quit();
+    }
+
+    public static void setEnv(String key, String value) {
+        try {
+            Map<String, String> env = System.getenv();
+            Class<?> cl = env.getClass();
+            Field field = cl.getDeclaredField("m");
+            field.setAccessible(true);
+            Map<String, String> writableEnv = (Map<String, String>) field.get(env);
+            writableEnv.put(key, value);
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to set environment variable", e);
+        }
     }
 
 }
