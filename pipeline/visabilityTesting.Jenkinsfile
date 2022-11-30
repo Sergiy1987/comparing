@@ -39,6 +39,7 @@
                     echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
                     sh 'npm --version'
                     //sh "npm install"
+                    sh "apt-get install libxkbcommon-x11-0"
                     sh "npm install @percy/cli --save-dev"
                     sh "npm audit fix"
                     wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 0, installationName: 'xvfb', parallelBuild: true, screen: '1600x1200x24', timeout: 10]) {
