@@ -39,7 +39,7 @@
                     echo "PERCY_TOKEN = ${env.PERCY_TOKEN1}"
                     sh 'npm --version'
                     sh "npm install"
-                    sh "npm install @percy/cli --save-dev"
+                   // sh "npm install @percy/cli --save-dev"
                     wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 0, installationName: 'xvfb', parallelBuild: true, screen: '1600x1200x24', timeout: 10]) {
                     sh 'npm test'+
                     ' -Duser.timezone=Europe/Kiev'
