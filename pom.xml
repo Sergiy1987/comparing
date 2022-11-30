@@ -317,15 +317,8 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                    <complianceLevel>${aspectj.version}</complianceLevel>
+                    <complianceLevel>1.8</complianceLevel>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
