@@ -36,7 +36,7 @@
             stage('Visability tests') {
                 steps {
                     sh "export PERCY_TOKEN=${PERCY_TOKEN1}"
-                    echo " PERCY_TOKEN = ${env.PERCY_TOKEN1}"
+                    echo "PERCY_TOKEN = ${env.PERCY_TOKEN1}"
                     sh 'npm --version'
                     sh "npm install"
                     sh "npm install @percy/cli --save-dev"
