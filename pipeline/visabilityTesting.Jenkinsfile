@@ -35,15 +35,18 @@
             }
             stage('Visability tests') {
                 steps {
-                    //sh "export PERCY_TOKEN=${PERCY_TOKEN}"
-                    echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
-                    sh 'npm --version'
-                    //sh "npm install"
-                    //sh "sudo apt-get install libxkbcommon-x11-0"
-                    sh "npm install @percy/cli --save-dev"
-                    sh "npm audit fix"
-                    wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 0, installationName: 'xvfb', parallelBuild: true, screen: '1600x1200x24', timeout: 10]) {
-                    sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test'
+                        browserstack(credentialsId: 'ab16f137-f363-493e-a1ea-df3ff3d3edb3') {
+                        //sh "export PERCY_TOKEN=${PERCY_TOKEN}"
+                        echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
+                        sh 'npm --version'
+                        //sh "npm install"
+                        //sh "sudo apt-get install libxkbcommon-x11-0"
+                        sh "npm install @percy/cli --save-dev"
+                        sh "npm audit fix"
+                        wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 0, installationName: 'xvfb', parallelBuild: true, screen: '1600x1200x24', timeout: 10]) {
+                        sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test'
+                        }
+                        browserStackReportPublisher 'automate'
                     }
                 }
             }
