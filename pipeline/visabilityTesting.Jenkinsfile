@@ -5,7 +5,8 @@
             jobName = "$JOB_NAME"
             buildNumber = "${env.BUILD_NUMBER}"
             dateTime = "${env.BUILD_TIMESTAMP}"
-            BROWSERSTACK_BUILD_NAME = "jenkins-" + "${jobName}" + "-" + "${env.buildNumber}"
+            BROWSERSTACK_BUILD_NAME = "Visibility_testing"
+            //"jenkins-" + "${jobName}" + "-" + "${env.buildNumber}"
             PERCY_TOKEN = "daa6c215ff1261f935236c4084944d7dd076d48392588c0d34210791d1d51223"
         }
         stages {
