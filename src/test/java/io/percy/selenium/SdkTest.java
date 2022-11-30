@@ -4,6 +4,7 @@ import com.codeborne.selenide.Selenide;
 import io.percy.selenium.data.BrowserName;
 import io.percy.selenium.logger.TestResultLoggerExtension;
 import io.percy.selenium.testBase.AbstractTestBase;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
@@ -44,6 +45,7 @@ public class SdkTest extends AbstractTestBase {
 
   @ParameterizedTest(name = "Run {index}: {1} {2}, {0}:{3}, {4}")
   @MethodSource(value = "browserParameters")
+  @Step
   public void takesLocalAppSnapshotWithProvidedName(String browserName, String platform,
                                                     String platformVersion, String browserVersion,
                                                     String screenResolution, String deviceName) {
