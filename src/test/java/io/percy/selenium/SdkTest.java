@@ -6,6 +6,7 @@ import io.percy.selenium.logger.TestResultLoggerExtension;
 import io.percy.selenium.testBase.AbstractTestBase;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,6 +46,7 @@ public class SdkTest extends AbstractTestBase {
 
   @ParameterizedTest(name = "Run {index}: {1} {2}, {0}:{3}, {4}")
   @MethodSource(value = "browserParameters")
+  @DisplayName(value = "takesLocalAppSnapshotWithProvidedName")
   @Step
   public void takesLocalAppSnapshotWithProvidedName(String browserName, String platform,
                                                     String platformVersion, String browserVersion,
