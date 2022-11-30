@@ -14,8 +14,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Slf4j
 public class AbstractTestBase {
@@ -57,7 +55,7 @@ public class AbstractTestBase {
         browserstackOptions.setCapability("osVersion", platformVersion);
         browserstackOptions.setCapability("projectName", testInfo.getDisplayName());
         browserstackOptions.setCapability("buildName", "Visibility_testing");//buildName
-        browserstackOptions.setCapability("sessionName", "BStack Build Name: " + buildName);
+        browserstackOptions.setCapability("sessionName", "Visibility_testing");
         browserstackOptions.setCapability("resolution", screenResolution);
         browserstackOptions.setCapability("local", "false");
         browserstackOptions.setCapability("debug", "true");
