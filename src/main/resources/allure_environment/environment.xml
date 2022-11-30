@@ -1,0 +1,23 @@
+<environment>
+    <name>Allure sample test pack</name>
+    <parameter>
+        <name>Operation System</name>
+        <key>Operation System</key>
+        <value>Linux</value>
+    </parameter>
+    <parameter>
+        <name>Browser</name>
+        <key>Browser</key>
+        <value>Chrome</value>
+    </parameter>
+    <parameter>
+        <name>Test stand</name>
+        <key>Test stand</key>
+        <value>Broono</value>
+    </parameter>
+    <parameter>
+        <name>Base url</name>
+        <key>Base url</key>
+        <value>https://broono.com</value>
+    </parameter>
+</environment>
