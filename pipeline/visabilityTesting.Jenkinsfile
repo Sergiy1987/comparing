@@ -50,8 +50,8 @@
                         wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 0, installationName: 'xvfb', parallelBuild: true, screen: '1600x1200x24', timeout: 10]) {
                         sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test'
                         }
-                        //browserStackReportPublisher 'automate'
                         junit testDataPublishers: [[$class: 'AutomateTestDataPublisher']], testResults: 'target/surefire-reports/TEST-*.xml'
+                        browserStackReportPublisher 'automate'
                     }
                 }
             }
