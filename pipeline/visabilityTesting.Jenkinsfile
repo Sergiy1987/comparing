@@ -1,6 +1,6 @@
     pipeline {
         agent any
-         tools { nodejs "node" }
+         tools { nodejs "NodeJS" }
         environment {
             jobName = "$JOB_NAME"
             buildNumber = "${env.BUILD_NUMBER}"
