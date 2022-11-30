@@ -29,7 +29,7 @@
                 steps {
                     git branch: 'master',
                     /*credentialsId: 'prod_jenkins',*/
-                    url: 'git@github.com:Sergiy1987/comparing.git'
+                    url: 'https://github.com/Sergiy1987/comparing.git'
                 }
             }
             stage('Visability tests') {
