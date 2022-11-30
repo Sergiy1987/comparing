@@ -5,7 +5,7 @@
             jobName = "$JOB_NAME"
             buildNumber = "${env.BUILD_NUMBER}"
             dateTime = "${env.BUILD_TIMESTAMP}"
-            PERCY_TOKEN1="daa6c215ff1261f935236c4084944d7dd076d48392588c0d34210791d1d51223"
+            PERCY_TOKEN1 = "daa6c215ff1261f935236c4084944d7dd076d48392588c0d34210791d1d51223"
         }
         stages {
             stage('Clean workspace') {
@@ -36,7 +36,7 @@
             stage('Visability tests') {
                 steps {
                     sh "export PERCY_TOKEN=${PERCY_TOKEN1}"
-                    echo "${PERCY_TOKEN}"
+                    echo " PERCY_TOKEN = ${env.PERCY_TOKEN}"
                     sh 'npm --version'
                     sh "npm install"
                     sh "npm install @percy/cli --save-dev"
