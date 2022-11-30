@@ -15,5 +15,6 @@ allure-results/
 .vscode
 .settings
 ._*
-.iml
+/*.iml
 
+/percy-java-selenium.iml
