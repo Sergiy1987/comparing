@@ -37,7 +37,7 @@
                     sh "export PERCY_TOKEN=${PERCY_TOKEN1}"
                     //echo "token is set "+${PERCY_TOKEN}
                     //sh 'npm --version'
-                    sh 'apt-get install npm'
+                    sh 'sudo apt-get install npm'
                     wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 0, installationName: 'xvfb', parallelBuild: true, screen: '1600x1200x24', timeout: 10]) {
                     sh 'npm test'+
                     ' -Duser.timezone=Europe/Kiev'
