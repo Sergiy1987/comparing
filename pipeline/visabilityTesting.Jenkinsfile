@@ -62,7 +62,7 @@
                         browserstack(credentialsId: 'browserstack') {
                         sh "export PERCY_TOKEN=${PERCY_TOKEN}"
                         echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
-                        sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -Dtest=FirefoxOrderTrackingPageTests'
+                        //sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -Dtest=FirefoxOrderTrackingPageTests'
                         junit testDataPublishers: [[$class: 'AutomateTestDataPublisher']], testResults: 'target/surefire-reports/TEST-*.xml'
                         browserStackReportPublisher 'automate'
                     }
@@ -76,7 +76,7 @@
                         browserstack(credentialsId: 'browserstack') {
                         sh "export PERCY_TOKEN=${PERCY_TOKEN}"
                         echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
-                        sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -Dtest=SafariOrderTrackingPageTests'
+                        //sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -Dtest=SafariOrderTrackingPageTests'
                         junit testDataPublishers: [[$class: 'AutomateTestDataPublisher']], testResults: 'target/surefire-reports/TEST-*.xml'
                         browserStackReportPublisher 'automate'
                     }
