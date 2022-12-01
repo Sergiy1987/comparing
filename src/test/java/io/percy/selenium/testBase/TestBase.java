@@ -9,6 +9,7 @@ import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.CapabilityType;
@@ -124,6 +125,7 @@ public class TestBase {
     }
 
     @AfterEach
+    @Order(2)
     protected void closeDriver() {
         if (driver != null) {
             driver.quit();

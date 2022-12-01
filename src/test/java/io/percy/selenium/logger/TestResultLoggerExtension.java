@@ -1,7 +1,7 @@
 package io.percy.selenium.logger;
 
 import io.percy.selenium.flow.BrowserFlow;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     }
 
     @Override
-    @AfterEach
+    @Order(1)
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
@@ -59,7 +59,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     }
 
     @Override
-    @AfterEach
+    @Order(1)
     public void testSuccessful(ExtensionContext context) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
@@ -71,7 +71,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     }
 
     @Override
-    @AfterEach
+    @Order(1)
     public void testAborted(ExtensionContext context, Throwable cause) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
@@ -83,7 +83,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     }
 
     @Override
-    @AfterEach
+    @Order(1)
     public void testFailed(ExtensionContext context, Throwable cause) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
