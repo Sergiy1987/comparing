@@ -5,6 +5,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import io.percy.selenium.Percy;
 import io.percy.selenium.core.properties.Properties;
 import io.percy.selenium.core.properties.PropertiesLoader;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -23,6 +24,7 @@ public class AbstractTestBase {
     protected static Percy percy;
     //private static final String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
+    @Step
     public static void setUpDriver(String browserName, String platform,
                                    String platformVersion, TestInfo testInfo,
                                    String browserVersion, String screenResolution, String deviceName) {
@@ -122,6 +124,7 @@ public class AbstractTestBase {
     }
 
     @AfterEach
+    @Step
     public static void closeDriver() {
         if (driver != null) WebDriverRunner.getWebDriver().quit();
     }

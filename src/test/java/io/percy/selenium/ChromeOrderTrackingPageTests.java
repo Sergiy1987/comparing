@@ -29,6 +29,7 @@ public class ChromeOrderTrackingPageTests extends AbstractTestBase {
     }
 
     @AfterEach
+    @Step
     protected void closeConnection() { AbstractTestBase.closeDriver(); }
 
     private static Stream<Arguments> browserParameters() {
