@@ -8,7 +8,7 @@ import io.percy.selenium.core.properties.PropertiesLoader;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.CapabilityType;
@@ -17,10 +17,13 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public abstract class TestBase {
     protected static RemoteWebDriver driver;
+    private static final List<RemoteWebDriver> driverList = new ArrayList<>();
     protected static Percy percy;
     //private static final String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
@@ -45,10 +48,10 @@ public abstract class TestBase {
             mobileOptions.setCapability("bstack:options", browserstackOptions);
             setConnectionForBrowserStack(hubUrl, mobileOptions);
         }
-        Configuration.baseUrl = System.getProperty(Properties.STAGE_OT_URL);
         Configuration.timeout = 10000;
+        if (!driverList.contains(driver)) driverList.add(driver);
         WebDriverRunner.setWebDriver(driver);
-        percy = new Percy(driver);//WebDriverRunner.getAndCheckWebDriver()
+        percy = new Percy(WebDriverRunner.getWebDriver());
         //Selenide.open(System.getProperty(Properties.STAGE_OT_URL));
     }
 
@@ -124,9 +127,11 @@ public abstract class TestBase {
                 testName + "_" + platformName + "_" + platformVersion + "_" + browserName + "_" + deviceName;
     }
 
-    @AfterEach
-    @Step
-    protected void closeDriver() {
-        if (driver != null) driver.quit();
+    @AfterAll
+    public static void closeDriver() {
+        if (!driverList.isEmpty()) {
+            driverList.forEach(RemoteWebDriver::quit);
+            log.info("Quit!!!!");
+        }
     }
 }
