@@ -8,7 +8,7 @@ import io.percy.selenium.core.properties.PropertiesLoader;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.CapabilityType;
@@ -22,7 +22,7 @@ import java.util.List;
 
 @Slf4j
 public abstract class TestBase {
-    protected static RemoteWebDriver driver;
+    private static RemoteWebDriver driver;
     private static final List<RemoteWebDriver> driverList = new ArrayList<>();
     protected static Percy percy;
     //private static final String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -127,8 +127,8 @@ public abstract class TestBase {
                 testName + "_" + platformName + "_" + platformVersion + "_" + browserName + "_" + deviceName;
     }
 
-    @AfterAll
-    public static void closeDriver() {
+    @AfterEach
+    protected void closeDriver() {
         if (!driverList.isEmpty()) {
             driverList.forEach(RemoteWebDriver::quit);
             log.info("Quit!!!!");
