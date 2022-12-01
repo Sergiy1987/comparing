@@ -17,13 +17,11 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 public abstract class TestBase {
     private static RemoteWebDriver driver;
-    private static final List<RemoteWebDriver> driverList = new ArrayList<>();
+    //private static final List<RemoteWebDriver> driverList = new ArrayList<>();
     protected static Percy percy;
     //private static final String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
@@ -37,7 +35,7 @@ public abstract class TestBase {
                 System.getProperty(Properties.BROWSER_STACK_API_KEY) + System.getProperty(Properties.BROWSER_STACK_HUB_URL);
         System.out.println("platformName = " + platform + ", browserName = " + browserName);
 
-        if (platform.equals("Windows") || platform.equals("OS X")) {
+        if (platform.equals("Windows") | platform.equals("OS X")) {
             MutableCapabilities browserOptions = setBrowserOptions(browserName, browserVersion);
             MutableCapabilities browserstackOptions = setBrowserStackBrowserOptions(platform, platformVersion, testInfo, screenResolution, browserName);
             browserOptions.setCapability("bstack:options", browserstackOptions);
@@ -49,7 +47,7 @@ public abstract class TestBase {
             setConnectionForBrowserStack(hubUrl, mobileOptions);
         }
         Configuration.timeout = 10000;
-        if (!driverList.contains(driver)) driverList.add(driver);
+        //if (!driverList.contains(driver)) driverList.add(driver);
         WebDriverRunner.setWebDriver(driver);
         percy = new Percy(WebDriverRunner.getWebDriver());
         //Selenide.open(System.getProperty(Properties.STAGE_OT_URL));
@@ -129,8 +127,9 @@ public abstract class TestBase {
 
     @AfterEach
     protected void closeDriver() {
-        if (!driverList.isEmpty()) {
-            driverList.forEach(RemoteWebDriver::quit);
+        if (driver != null) {
+            driver.quit();
+            //driverList.forEach(RemoteWebDriver::quit);
             log.info("Quit!!!!");
         }
     }
