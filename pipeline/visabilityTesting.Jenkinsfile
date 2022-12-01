@@ -43,7 +43,7 @@
             }
             stage('Chrome') {
                 environment {
-                    PERCY_TOKEN = "daa6c215ff1261f935236c4084944d7dd076d48392588c0d34210791d1d51223"
+                    PERCY_TOKEN = "bd8b497f4312c2ce03a53eb32e8e9199f50387483593239b2c0368f6fa155c3d"
                 }
                 steps {
                         browserstack(credentialsId: 'ab16f137-f363-493e-a1ea-df3ff3d3edb3') {
@@ -57,7 +57,7 @@
             }
             stage('Firefox') {
                 environment {
-                    PERCY_TOKEN = "dc315d8613eecb02f7c659954d5f2d774be2306d3763ab6c6ab09865cf36413e"
+                    PERCY_TOKEN = "8403c430db27447139b3271134176f1cc6db8a31223143d1b70af4aa2ddef133"
                 }
                     steps {
                         browserstack(credentialsId: 'ab16f137-f363-493e-a1ea-df3ff3d3edb3') {
@@ -71,7 +71,7 @@
             }
             stage('Safari') {
                 environment {
-                    PERCY_TOKEN = "905596f919f1076c7234bda79a83a826d3aaa2966c5dfce949ac79ebc1d3b03e"
+                    PERCY_TOKEN = "c15768cbdd224d58651370e3304387ad2005411ce4322ea8e764c193fb037b37"
                 }
                     steps {
                         browserstack(credentialsId: 'ab16f137-f363-493e-a1ea-df3ff3d3edb3') {
