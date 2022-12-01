@@ -5,10 +5,6 @@
             jobName = "$JOB_NAME"
             buildNumber = "${env.BUILD_NUMBER}"
             dateTime = "${env.BUILD_TIMESTAMP}"
-            BROWSERSTACK_BUILD_NAME = "Visibility_testing"
-            BROWSERSTACK_BUILD = "Visibility_testing"
-            //"jenkins-" + "${jobName}" + "-" + "${env.buildNumber}"
-            PERCY_TOKEN = "daa6c215ff1261f935236c4084944d7dd076d48392588c0d34210791d1d51223"
         }
         stages {
             stage('Clean workspace') {
@@ -37,19 +33,35 @@
                     url: 'https://github.com/Sergiy1987/comparing.git'
                 }
             }
-            stage('Visability tests') {
+            stage('Install dependencies') {
+                    sh "npm install"
+                    sh 'npm --version'
+                    sh "npm install @percy/cli --save-dev"
+                    sh "npm audit fix"
+            }
+            stage('Visibility tests chrome') {
+                environment {
+                    PERCY_TOKEN = "daa6c215ff1261f935236c4084944d7dd076d48392588c0d34210791d1d51223"
+                }
                 steps {
                         browserstack(credentialsId: 'ab16f137-f363-493e-a1ea-df3ff3d3edb3') {
-                        //sh "export PERCY_TOKEN=${PERCY_TOKEN}"
+                        sh "export PERCY_TOKEN=${PERCY_TOKEN}"
                         echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
-                        sh 'npm --version'
-                        //sh "npm install"
-                        //sh "sudo apt-get install libxkbcommon-x11-0"
-                        sh "npm install @percy/cli --save-dev"
-                        sh "npm audit fix"
-                        wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 0, installationName: 'xvfb', parallelBuild: true, screen: '1600x1200x24', timeout: 10]) {
-                        sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test'
-                        }
+                        sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -Dtest=ChromeOrderTrackingPageTests'
+                        junit testDataPublishers: [[$class: 'AutomateTestDataPublisher']], testResults: 'target/surefire-reports/TEST-*.xml'
+                        browserStackReportPublisher 'automate'
+                    }
+                }
+            }
+            stage('Visibility tests firefox') {
+                environment {
+                    PERCY_TOKEN = "dc315d8613eecb02f7c659954d5f2d774be2306d3763ab6c6ab09865cf36413e"
+                }
+                    steps {
+                        browserstack(credentialsId: 'ab16f137-f363-493e-a1ea-df3ff3d3edb3') {
+                        sh "export PERCY_TOKEN=${PERCY_TOKEN}"
+                        echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
+                        sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -Dtest=FirefoxOrderTrackingPageTests'
                         junit testDataPublishers: [[$class: 'AutomateTestDataPublisher']], testResults: 'target/surefire-reports/TEST-*.xml'
                         browserStackReportPublisher 'automate'
                     }
