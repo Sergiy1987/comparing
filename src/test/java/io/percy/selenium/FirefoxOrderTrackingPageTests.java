@@ -10,12 +10,11 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
 import java.util.Arrays;
 import java.util.stream.Stream;
-
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+//@ExtendWith({TestResultLoggerExtension.class})
 public class FirefoxOrderTrackingPageTests extends TestBase {
     private TestInfo testInfo;
 

@@ -1,8 +1,6 @@
 package io.percy.selenium.logger;
 
-import io.percy.selenium.annotations.Flow;
-import io.percy.selenium.flow.SeleniumFlow;
-import io.percy.selenium.flow.basePageFlow.InitFlow;
+import io.percy.selenium.flow.BrowserFlow;
 import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;
 import org.slf4j.Logger;
@@ -17,9 +15,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-public class TestResultLoggerExtension extends InitFlow implements TestWatcher, BeforeTestExecutionCallback, AfterTestExecutionCallback, AfterAllCallback {
+public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecutionCallback, AfterTestExecutionCallback, AfterAllCallback {
     private static final Logger logger = LoggerFactory.getLogger(TestResultLoggerExtension.class);
-    @Flow SeleniumFlow seleniumFlow;
+    private final BrowserFlow browserFlow = new BrowserFlow();
 
     private final List<TestResultStatus> testResultsStatus = new ArrayList<>();
     private static final String START_TIME = "start time";
@@ -98,7 +96,7 @@ public class TestResultLoggerExtension extends InitFlow implements TestWatcher, 
 
     private void markTestStatus(String status, String reason) {
         try {
-            seleniumFlow.getJsExecutor().executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"" + status + "\", \"reason\": \"" + reason + "\"}}");
+            browserFlow.getJsExecutor().executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"" + status + "\", \"reason\": \"" + reason + "\"}}");
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
