@@ -102,6 +102,7 @@ public abstract class TestBase {
         browserstackOptions.setCapability("video", "false");
         browserstackOptions.setCapability("seleniumVersion", "4.1.0");
         browserstackOptions.setCapability("telemetryLogs", "true");
+        browserstackOptions.setCapability("idleTimeout", "90");
         return browserstackOptions;
     }
 
