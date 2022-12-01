@@ -1,6 +1,8 @@
 package io.percy.selenium.logger;
 
 import io.percy.selenium.flow.BrowserFlow;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;
 import org.slf4j.Logger;
@@ -42,16 +44,15 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
 
     @Override
     public void afterAll(ExtensionContext context) {
-//        Map<String, String> summary = testResultsStatus.stream()
-//                .collect(Collectors.toMap(testName, context.getDisplayName()));
         logger.info("Test result summary for {} ", testResultsStatus);
     }
 
     @Override
+    @AfterEach
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
-        String testName = testClass + "." + testMethod;
+        String testName = testClass + "." + testMethod + " " + context.getDisplayName();
         this.markTestStatus(TestResultStatus.DISABLED.name(), reason.orElse("Disabled"));
         logger.info("Test Disabled for {}: with reason :- {}", context.getDisplayName(), reason.orElse("Disabled"));
         testResultsStatus.put(testName, TestResultStatus.DISABLED);
@@ -59,21 +60,23 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     }
 
     @Override
+    @AfterEach
     public void testSuccessful(ExtensionContext context) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
-        String testName = testClass + "." + testMethod;
-        this.markTestStatus(TestResultStatus.SUCCESSFUL.name(), "");
+        String testName = testClass + "." + testMethod + " " + context.getDisplayName();
+        this.markTestStatus(TestResultStatus.SUCCESSFUL.name(), TestResultStatus.SUCCESSFUL.name());
         logger.info("Test Successful for {}: ", context.getDisplayName());
         testResultsStatus.put(testName, TestResultStatus.SUCCESSFUL);
         TestWatcher.super.testSuccessful(context);
     }
 
     @Override
+    @AfterEach
     public void testAborted(ExtensionContext context, Throwable cause) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
-        String testName = testClass + "." + testMethod;
+        String testName = testClass + "." + testMethod + " " + context.getDisplayName();
         this.markTestStatus(TestResultStatus.ABORTED.name(), cause.getMessage());
         logger.info("Test Aborted for {}: ", context.getDisplayName());
         testResultsStatus.put(testName, TestResultStatus.ABORTED);
@@ -81,10 +84,11 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     }
 
     @Override
+    @AfterEach
     public void testFailed(ExtensionContext context, Throwable cause) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
-        String testName = testClass + "." + testMethod;
+        String testName = testClass + "." + testMethod + " " + context.getDisplayName();
         this.markTestStatus(TestResultStatus.FAILED.name(), cause.getMessage());
         logger.info("Test Failed for {}: ", context.getDisplayName());
         testResultsStatus.put(testName, TestResultStatus.FAILED);
