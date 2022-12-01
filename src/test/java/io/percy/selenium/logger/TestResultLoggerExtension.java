@@ -1,9 +1,10 @@
 package io.percy.selenium.logger;
 
-import io.percy.selenium.flow.BrowserFlow;
+import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;
+import org.openqa.selenium.JavascriptExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecutionCallback, AfterTestExecutionCallback, AfterAllCallback {
     private static final Logger logger = LoggerFactory.getLogger(TestResultLoggerExtension.class);
-    private final BrowserFlow browserFlow = new BrowserFlow();
+    //private final BrowserFlow browserFlow = new BrowserFlow();
 
     private final Map<String, TestResultStatus> testResultsStatus = new HashMap<>();
     private static final String START_TIME = "start time";
@@ -55,7 +56,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
         this.markTestStatus(TestResultStatus.DISABLED.name(), reason.orElse("Disabled"));
         logger.info("Test Disabled for {}: with reason :- {}", context.getDisplayName(), reason.orElse("Disabled"));
         testResultsStatus.put(testName, TestResultStatus.DISABLED);
-        TestWatcher.super.testDisabled(context, reason);
+        TestWatcher.super.testDisabled(context, Optional.of(TestResultStatus.DISABLED.name()));
     }
 
     @Override
@@ -107,8 +108,9 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     }
 
     private void markTestStatus(String status, String reason) {
+        JavascriptExecutor jse = (JavascriptExecutor) WebDriverRunner.getAndCheckWebDriver();
         try {
-            browserFlow.getJsExecutor().executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"" + status + "\", \"reason\": \"" + reason + "\"}}");
+            jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"" + status + "\", \"reason\": \"" + reason + "\"}}");
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
