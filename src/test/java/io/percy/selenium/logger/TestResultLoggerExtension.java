@@ -7,19 +7,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 
 public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecutionCallback, AfterTestExecutionCallback, AfterAllCallback {
     private static final Logger logger = LoggerFactory.getLogger(TestResultLoggerExtension.class);
     private final BrowserFlow browserFlow = new BrowserFlow();
 
-    private final List<TestResultStatus> testResultsStatus = new ArrayList<>();
+    private final Map<String, TestResultStatus> testResultsStatus = new HashMap<>();
     private static final String START_TIME = "start time";
 
     @Override
@@ -45,41 +42,53 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
 
     @Override
     public void afterAll(ExtensionContext context) {
-        Map<TestResultStatus, Long> summary = testResultsStatus.stream()
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        logger.info("Test result summary for {} {}", context.getDisplayName(), summary.toString());
+//        Map<String, String> summary = testResultsStatus.stream()
+//                .collect(Collectors.toMap(testName, context.getDisplayName()));
+        logger.info("Test result summary for {} ", testResultsStatus);
     }
 
     @Override
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
-        logger.info("Test Disabled for {}: with reason :- {}", context.getDisplayName(), reason.orElse("Disabled"));
-        testResultsStatus.add(TestResultStatus.DISABLED);
-        TestWatcher.super.testDisabled(context, reason);
+        String testClass = this.getTestClassName(context).getSimpleName();
+        String testMethod = this.getTestMethodName(context).getName();
+        String testName = testClass + "." + testMethod;
         this.markTestStatus(TestResultStatus.DISABLED.name(), reason.orElse("Disabled"));
+        logger.info("Test Disabled for {}: with reason :- {}", context.getDisplayName(), reason.orElse("Disabled"));
+        testResultsStatus.put(testName, TestResultStatus.DISABLED);
+        TestWatcher.super.testDisabled(context, reason);
     }
 
     @Override
     public void testSuccessful(ExtensionContext context) {
-        logger.info("Test Successful for {}: ", context.getDisplayName());
-        testResultsStatus.add(TestResultStatus.SUCCESSFUL);
-        TestWatcher.super.testSuccessful(context);
+        String testClass = this.getTestClassName(context).getSimpleName();
+        String testMethod = this.getTestMethodName(context).getName();
+        String testName = testClass + "." + testMethod;
         this.markTestStatus(TestResultStatus.SUCCESSFUL.name(), "");
+        logger.info("Test Successful for {}: ", context.getDisplayName());
+        testResultsStatus.put(testName, TestResultStatus.SUCCESSFUL);
+        TestWatcher.super.testSuccessful(context);
     }
 
     @Override
     public void testAborted(ExtensionContext context, Throwable cause) {
-        logger.info("Test Aborted for {}: ", context.getDisplayName());
-        testResultsStatus.add(TestResultStatus.ABORTED);
-        TestWatcher.super.testAborted(context, cause);
+        String testClass = this.getTestClassName(context).getSimpleName();
+        String testMethod = this.getTestMethodName(context).getName();
+        String testName = testClass + "." + testMethod;
         this.markTestStatus(TestResultStatus.ABORTED.name(), cause.getMessage());
+        logger.info("Test Aborted for {}: ", context.getDisplayName());
+        testResultsStatus.put(testName, TestResultStatus.ABORTED);
+        TestWatcher.super.testAborted(context, cause);
     }
 
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
-        logger.info("Test Failed for {}: ", context.getDisplayName());
-        testResultsStatus.add(TestResultStatus.FAILED);
-        TestWatcher.super.testFailed(context, cause);
+        String testClass = this.getTestClassName(context).getSimpleName();
+        String testMethod = this.getTestMethodName(context).getName();
+        String testName = testClass + "." + testMethod;
         this.markTestStatus(TestResultStatus.FAILED.name(), cause.getMessage());
+        logger.info("Test Failed for {}: ", context.getDisplayName());
+        testResultsStatus.put(testName, TestResultStatus.FAILED);
+        TestWatcher.super.testFailed(context, cause);
     }
 
     private Method getTestMethodName(ExtensionContext context) {
