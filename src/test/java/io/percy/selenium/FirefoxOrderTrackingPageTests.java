@@ -30,8 +30,8 @@ public class FirefoxOrderTrackingPageTests extends AbstractTestBase {
     private static Stream<Arguments> browserParameters() {
         return Stream.of(
                 arguments(BrowserName.Firefox.name(), "Windows", "10", "latest", "1280x1024", ""),
-                arguments(BrowserName.Firefox.name(), "OS X", "Ventura", "latest", "1280x1024", ""),
-                arguments(BrowserName.Firefox.name(), "Android", "12.0", "", "", "Samsung Galaxy S22 Ultra")
+                arguments(BrowserName.Firefox.name(), "OS X", "Ventura", "latest", "1280x1024", "")
+               // arguments(BrowserName.Firefox.name(), "Android", "12.0", "", "", "Samsung Galaxy S22 Ultra")
         );
     }
 

@@ -30,8 +30,8 @@ public class ChromeOrderTrackingPageTests extends AbstractTestBase {
     private static Stream<Arguments> browserParameters() {
         return Stream.of(
                 arguments(BrowserName.Chrome.name(), "Windows", "10", "latest", "1280x1024", ""),
-                arguments(BrowserName.Chrome.name(), "OS X", "Ventura", "latest", "1280x1024", ""),
-                arguments(BrowserName.Chrome.name(), "Android", "12.0", "", "", "Samsung Galaxy S22 Ultra")
+                arguments(BrowserName.Chrome.name(), "OS X", "Ventura", "latest", "1280x1024", "")
+                //arguments(BrowserName.Chrome.name(), "Android", "12.0", "", "", "Samsung Galaxy S22 Ultra")
         );
     }
 

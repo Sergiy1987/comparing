@@ -29,8 +29,8 @@ public class SafariOrderTrackingPageTests extends AbstractTestBase {
 
     private static Stream<Arguments> browserParameters() {
         return Stream.of(
-                arguments(BrowserName.Safari.name(), "OS X", "Ventura", "latest", "1280x1024", ""),
-                arguments(BrowserName.Safari.name(), "iOS", "16.0", "", "", "iPhone 14 Pro Max")
+                arguments(BrowserName.Safari.name(), "OS X", "Ventura", "latest", "1280x1024", "")
+                //arguments(BrowserName.Safari.name(), "iOS", "16.0", "", "", "iPhone 14 Pro Max")
         );
     }
 
