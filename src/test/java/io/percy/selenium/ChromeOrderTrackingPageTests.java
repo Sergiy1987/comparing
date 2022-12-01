@@ -3,7 +3,7 @@ package io.percy.selenium;
 import com.codeborne.selenide.Selenide;
 import io.percy.selenium.data.BrowserName;
 import io.percy.selenium.logger.TestResultLoggerExtension;
-import io.percy.selenium.testBase.AbstractTestBase;
+import io.percy.selenium.testBase.TestBase;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @ExtendWith({TestResultLoggerExtension.class})
-public class ChromeOrderTrackingPageTests extends AbstractTestBase {
+public class ChromeOrderTrackingPageTests extends TestBase {
     private TestInfo testInfo;
 
     @BeforeEach
@@ -30,7 +30,7 @@ public class ChromeOrderTrackingPageTests extends AbstractTestBase {
 
     @AfterEach
     @Step
-    protected void closeConnection() { AbstractTestBase.closeDriver(); }
+    protected void closeConnection() { closeDriver(); }
 
     private static Stream<Arguments> browserParameters() {
         return Stream.of(
@@ -47,8 +47,8 @@ public class ChromeOrderTrackingPageTests extends AbstractTestBase {
     public void orderTrackingPageTest(String browserName, String platform, String platformVersion,
                                       String browserVersion, String screenResolution, String deviceName) {
 
-        String screenshotName = AbstractTestBase.getScreenshotName(testInfo, platform, platformVersion, browserName, browserVersion, screenResolution, deviceName);
-        AbstractTestBase.setUpDriver(browserName, platform, platformVersion, testInfo, browserVersion, screenResolution, deviceName);
+        String screenshotName = TestBase.getScreenshotName(testInfo, platform, platformVersion, browserName, browserVersion, screenResolution, deviceName);
+        TestBase.setUpDriver(browserName, platform, platformVersion, testInfo, browserVersion, screenResolution, deviceName);
         Selenide.open("https://www.browserstack.com/");
         Selenide.sleep(5000);
         //percy = new Percy(WebDriverRunner.getWebDriver());

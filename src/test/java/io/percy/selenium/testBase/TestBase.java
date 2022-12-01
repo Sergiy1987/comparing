@@ -19,7 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Slf4j
-public class AbstractTestBase {
+public abstract class TestBase {
     protected static RemoteWebDriver driver;
     protected static Percy percy;
     //private static final String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -125,7 +125,7 @@ public class AbstractTestBase {
 
     @AfterEach
     @Step
-    public static void closeDriver() {
+    public void closeDriver() {
         if (driver != null) WebDriverRunner.getWebDriver().quit();
     }
 }
