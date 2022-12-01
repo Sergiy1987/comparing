@@ -47,7 +47,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     }
 
     @Override
-    @Order(1)
+    @Order(0)
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
@@ -59,7 +59,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     }
 
     @Override
-    @Order(1)
+    @Order(0)
     public void testSuccessful(ExtensionContext context) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
@@ -71,7 +71,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     }
 
     @Override
-    @Order(1)
+    @Order(0)
     public void testAborted(ExtensionContext context, Throwable cause) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
@@ -83,7 +83,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     }
 
     @Override
-    @Order(1)
+    @Order(0)
     public void testFailed(ExtensionContext context, Throwable cause) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();

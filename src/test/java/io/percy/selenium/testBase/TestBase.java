@@ -5,12 +5,14 @@ import com.codeborne.selenide.WebDriverRunner;
 import io.percy.selenium.Percy;
 import io.percy.selenium.core.properties.Properties;
 import io.percy.selenium.core.properties.PropertiesLoader;
+import io.percy.selenium.logger.TestResultLoggerExtension;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -20,6 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Slf4j
+@ExtendWith({TestResultLoggerExtension.class})
 public class TestBase {
     private static RemoteWebDriver driver;
     protected static Percy percy;
