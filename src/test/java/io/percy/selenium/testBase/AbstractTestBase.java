@@ -26,10 +26,10 @@ public class AbstractTestBase {
                                    String browserVersion, String screenResolution) {
         PropertiesLoader.loadProperties();
         MutableCapabilities browserOptions = setBrowserOptions(browserName, browserVersion);
-        MutableCapabilities browserstackOptions = setBrowserStackOptions(platform, platformVersion, testInfo, screenResolution);
+        MutableCapabilities browserstackOptions = setBrowserStackOptions(platform, platformVersion, testInfo, screenResolution, browserName);
         browserOptions.setCapability("bstack:options", browserstackOptions);
         System.out.println("browserName = " + browserName);
-        System.out.println("browserOptions = " + browserOptions);
+        System.out.println("browserOptions = " + browserOptions.asMap());
 
         String hubUrl = System.getProperty(Properties.BROWSER_STACK_USER_NAME) + ":" +
                 System.getProperty(Properties.BROWSER_STACK_API_KEY) + System.getProperty(Properties.BROWSER_STACK_HUB_URL);
@@ -48,13 +48,13 @@ public class AbstractTestBase {
 
 
     private static MutableCapabilities setBrowserStackOptions(String platform, String platformVersion,
-                                                             TestInfo testInfo, String screenResolution) {
+                                                             TestInfo testInfo, String screenResolution, String browserName) {
         MutableCapabilities browserstackOptions = new MutableCapabilities();
         browserstackOptions.setCapability("os", platform);
         browserstackOptions.setCapability("osVersion", platformVersion);
         browserstackOptions.setCapability("projectName", testInfo.getDisplayName());
-        browserstackOptions.setCapability("buildName", "Visibility_testing_"+platform);//buildName
-        browserstackOptions.setCapability("sessionName", "Visibility_testing");
+        browserstackOptions.setCapability("buildName", "Visibility_testing_"+platform+"_"+browserName);//buildName
+        browserstackOptions.setCapability("sessionName", "Visibility_testing_"+platform+"_"+browserName);
         browserstackOptions.setCapability("resolution", screenResolution);
         browserstackOptions.setCapability("local", "false");
         browserstackOptions.setCapability("debug", "true");
