@@ -5,7 +5,6 @@ import io.percy.selenium.data.BrowserName;
 import io.percy.selenium.logger.TestResultLoggerExtension;
 import io.percy.selenium.testBase.TestBase;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInfo;
@@ -27,10 +26,6 @@ public class ChromeOrderTrackingPageTests extends TestBase {
     protected void init(TestInfo testInfo) {
         this.testInfo = testInfo;
     }
-
-    @AfterEach
-    @Step
-    protected void closeConnection() { closeDriver(); }
 
     private static Stream<Arguments> browserParameters() {
         return Stream.of(

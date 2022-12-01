@@ -125,7 +125,7 @@ public abstract class TestBase {
 
     @AfterEach
     @Step
-    public void closeDriver() {
+    protected void closeDriver() {
         if (driver != null) WebDriverRunner.getWebDriver().quit();
     }
 }
