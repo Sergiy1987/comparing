@@ -6,6 +6,7 @@ import io.percy.selenium.Percy;
 import io.percy.selenium.core.properties.Properties;
 import io.percy.selenium.core.properties.PropertiesLoader;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.MutableCapabilities;
@@ -23,38 +24,40 @@ public class AbstractTestBase {
 
     public static void setUpDriver(String browserName, String platform,
                                    String platformVersion, TestInfo testInfo,
-                                   String browserVersion, String screenResolution) {
+                                   String browserVersion, String screenResolution, String deviceName) {
         PropertiesLoader.loadProperties();
-        MutableCapabilities browserOptions = setBrowserOptions(browserName, browserVersion);
-        MutableCapabilities browserstackOptions = setBrowserStackOptions(platform, platformVersion, testInfo, screenResolution, browserName);
-        browserOptions.setCapability("bstack:options", browserstackOptions);
-        System.out.println("browserName = " + browserName);
-        System.out.println("browserOptions = " + browserOptions.asMap());
 
         String hubUrl = System.getProperty(Properties.BROWSER_STACK_USER_NAME) + ":" +
                 System.getProperty(Properties.BROWSER_STACK_API_KEY) + System.getProperty(Properties.BROWSER_STACK_HUB_URL);
+        System.out.println("platformName = " + platform + ", browserName = " + browserName);
+
+        if (platform.equals("Windows") || platform.equals("OS X")) {
+            MutableCapabilities browserOptions = setBrowserOptions(browserName, browserVersion);
+            MutableCapabilities browserstackOptions = setBrowserStackBrowserOptions(platform, platformVersion, testInfo, screenResolution, browserName);
+            browserOptions.setCapability("bstack:options", browserstackOptions);
+            setConnectionForBrowserStack(hubUrl, browserOptions);
+        } else {
+            MutableCapabilities mobileOptions = setMobileOptions(browserName, platform);
+            MutableCapabilities browserstackOptions = setBrowserStackMobileOptions(platform, platformVersion, testInfo, browserName, deviceName);
+            mobileOptions.setCapability("bstack:options", browserstackOptions);
+            setConnectionForBrowserStack(hubUrl, mobileOptions);
+        }
         Configuration.baseUrl = System.getProperty(Properties.STAGE_OT_URL);
         Configuration.timeout = 10000;
-        try {
-            driver = new RemoteWebDriver(new URL(hubUrl), browserOptions);
-            //new ChromeDriver((ChromeOptions) browserOptions);
-        } catch (MalformedURLException e) {
-           log.error(e.getMessage());
-        }
         WebDriverRunner.setWebDriver(driver);
         percy = new Percy(driver);//WebDriverRunner.getAndCheckWebDriver()
         //Selenide.open(System.getProperty(Properties.STAGE_OT_URL));
     }
 
 
-    private static MutableCapabilities setBrowserStackOptions(String platform, String platformVersion,
-                                                             TestInfo testInfo, String screenResolution, String browserName) {
+    private static MutableCapabilities setBrowserStackBrowserOptions(String platform, String platformVersion,
+                                                                     TestInfo testInfo, String screenResolution, String browserName) {
         MutableCapabilities browserstackOptions = new MutableCapabilities();
         browserstackOptions.setCapability("os", platform);
         browserstackOptions.setCapability("osVersion", platformVersion);
         browserstackOptions.setCapability("projectName", testInfo.getDisplayName());
-        browserstackOptions.setCapability("buildName", "Visibility_testing_"+platform+"_"+browserName);//buildName
-        browserstackOptions.setCapability("sessionName", "Visibility_testing_"+platform+"_"+browserName);
+        browserstackOptions.setCapability("buildName", "Visibility_testing_" + platform + "_" + browserName);//buildName
+        browserstackOptions.setCapability("sessionName", "Visibility_testing_" + platform + "_" + browserName);
         browserstackOptions.setCapability("resolution", screenResolution);
         browserstackOptions.setCapability("local", "false");
         browserstackOptions.setCapability("debug", "true");
@@ -71,6 +74,47 @@ public class AbstractTestBase {
         browserOptions.setCapability(CapabilityType.BROWSER_NAME, browserName);
         browserOptions.setCapability(CapabilityType.BROWSER_VERSION, browserVersion);
         return browserOptions;
+    }
+
+    private static MutableCapabilities setMobileOptions(String browserName, String platform) {
+        MutableCapabilities mobileOptions = new MutableCapabilities();
+        mobileOptions.setCapability(CapabilityType.BROWSER_NAME, browserName);
+        mobileOptions.setCapability(CapabilityType.PLATFORM_NAME, platform);
+        return mobileOptions;
+    }
+
+    private static MutableCapabilities setBrowserStackMobileOptions(String platform, String platformVersion,
+                                                                    TestInfo testInfo, String browserName, String deviceName) {
+        MutableCapabilities browserstackOptions = new MutableCapabilities();
+        browserstackOptions.setCapability("osVersion", platformVersion);
+        browserstackOptions.setCapability("deviceName", deviceName);
+        browserstackOptions.setCapability("projectName", testInfo.getDisplayName());
+        browserstackOptions.setCapability("buildName", "Visibility_testing_" + platform + "_" + browserName);//buildName
+        browserstackOptions.setCapability("sessionName", "Visibility_testing_" + platform + "_" + browserName);
+        browserstackOptions.setCapability("local", "false");
+        browserstackOptions.setCapability("debug", "true");
+        browserstackOptions.setCapability("consoleLogs", "info");
+        browserstackOptions.setCapability("networkLogs", "true");
+        browserstackOptions.setCapability("video", "false");
+        browserstackOptions.setCapability("seleniumVersion", "4.1.0");
+        browserstackOptions.setCapability("telemetryLogs", "true");
+        return browserstackOptions;
+    }
+
+    private static void setConnectionForBrowserStack(String hubUrl, MutableCapabilities deviceOptions) {
+        try {
+            driver = new RemoteWebDriver(new URL(hubUrl), deviceOptions);
+        } catch (MalformedURLException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    public static String getScreenshotName(TestInfo testInfo, String platform, String platformVersion,
+                                           String browserName, String browserVersion, String screenResolution,
+                                           String deviceName) {
+        return StringUtils.isEmpty(deviceName) ?
+                testInfo.getDisplayName() + "_" + platform + "_" + platformVersion + "_" + browserName + "_" + browserVersion + "_" + screenResolution :
+                testInfo.getDisplayName() + "_" + platform + "_" + platformVersion + "_" + browserName + "_" + deviceName;
     }
 
     @AfterAll

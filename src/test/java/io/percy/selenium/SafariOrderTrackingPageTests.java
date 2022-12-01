@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @ExtendWith({TestResultLoggerExtension.class})
-public class ChromeOrderTrackingPageTests extends AbstractTestBase {
+public class SafariOrderTrackingPageTests extends AbstractTestBase {
     private TestInfo testInfo;
 
     @BeforeEach
@@ -29,9 +29,8 @@ public class ChromeOrderTrackingPageTests extends AbstractTestBase {
 
     private static Stream<Arguments> browserParameters() {
         return Stream.of(
-                arguments(BrowserName.Chrome.name(), "Windows", "10", "latest", "1280x1024", ""),
-                arguments(BrowserName.Chrome.name(), "OS X", "Ventura", "latest", "1280x1024", ""),
-                arguments(BrowserName.Chrome.name(), "Android", "12.0", "", "", "Samsung Galaxy S22 Ultra")
+                arguments(BrowserName.Safari.name(), "OS X", "Ventura", "latest", "1280x1024", ""),
+                arguments(BrowserName.Safari.name(), "iOS", "16.0", "", "", "iPhone 14 Pro Max")
         );
     }
 
@@ -41,29 +40,16 @@ public class ChromeOrderTrackingPageTests extends AbstractTestBase {
     @Step
     public void orderTrackingPageTest(String browserName, String platform, String platformVersion,
                                       String browserVersion, String screenResolution, String deviceName) {
-
         String screenshotName = AbstractTestBase.getScreenshotName(testInfo, platform, platformVersion, browserName, browserVersion, screenResolution, deviceName);
         AbstractTestBase.setUpDriver(browserName, platform, platformVersion, testInfo, browserVersion, screenResolution, deviceName);
         Selenide.open("https://www.browserstack.com/");
         Selenide.sleep(5000);
         //percy = new Percy(WebDriverRunner.getWebDriver());
         percy.snapshot(screenshotName, Arrays.asList(1280, 768, 375), 1024, true);
-//    atOrderTrackingPage()
+        //    atOrderTrackingPage()
 //            .openOrderTrackingPage(OrderTrackingElements.class)
 //            .setOrderIntoInputField("12")
 //            .clickOnOrderTrackingButton();
 //    Selenide.sleep(5000);
     }
-//    public static void setEnv(String key, String value) {
-//        try {
-//            Map<String, String> env = System.getenv();
-//            Class<?> cl = env.getClass();
-//            Field field = cl.getDeclaredField("m");
-//            field.setAccessible(true);
-//            Map<String, String> writableEnv = (Map<String, String>) field.get(env);
-//            writableEnv.put(key, value);
-//        } catch (Exception e) {
-//            throw new IllegalStateException("Failed to set environment variable", e);
-//        }
-//    }
 }
