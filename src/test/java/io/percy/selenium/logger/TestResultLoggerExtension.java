@@ -1,7 +1,6 @@
 package io.percy.selenium.logger;
 
 import io.percy.selenium.flow.BrowserFlow;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;
