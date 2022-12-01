@@ -1,5 +1,8 @@
 package io.percy.selenium.logger;
 
+import io.percy.selenium.annotations.Flow;
+import io.percy.selenium.flow.SeleniumFlow;
+import io.percy.selenium.flow.basePageFlow.InitFlow;
 import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;
 import org.slf4j.Logger;
@@ -14,8 +17,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecutionCallback, AfterTestExecutionCallback, AfterAllCallback {
+public class TestResultLoggerExtension extends InitFlow implements TestWatcher, BeforeTestExecutionCallback, AfterTestExecutionCallback, AfterAllCallback {
     private static final Logger logger = LoggerFactory.getLogger(TestResultLoggerExtension.class);
+    @Flow SeleniumFlow seleniumFlow;
 
     private final List<TestResultStatus> testResultsStatus = new ArrayList<>();
     private static final String START_TIME = "start time";
@@ -23,15 +27,15 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
     @Override
     public void beforeTestExecution(ExtensionContext context) {
         getStore(context).put(START_TIME, System.currentTimeMillis());
-        String testClass = getTestClassName(context).getSimpleName();
-        String testMethod = getTestMethodName(context).getName();
+        String testClass = this.getTestClassName(context).getSimpleName();
+        String testMethod = this.getTestMethodName(context).getName();
         logger.info("I am in onTestStart method {}.{}", testClass, testMethod + " start");
     }
 
     @Override
     public void afterTestExecution(ExtensionContext context) {
-        String testClass = getTestClassName(context).getSimpleName();
-        String testMethod = getTestMethodName(context).getName();
+        String testClass = this.getTestClassName(context).getSimpleName();
+        String testMethod = this.getTestMethodName(context).getName();
         long startTime = getStore(context).remove(START_TIME, long.class);
         long duration = System.currentTimeMillis() - startTime;
         logger.info("I am in onTestFinish method {}.{}, duration time {} ms", testClass, testMethod, duration);
@@ -53,6 +57,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
         logger.info("Test Disabled for {}: with reason :- {}", context.getDisplayName(), reason.orElse("Disabled"));
         testResultsStatus.add(TestResultStatus.DISABLED);
         TestWatcher.super.testDisabled(context, reason);
+        this.markTestStatus(TestResultStatus.DISABLED.name(), reason.orElse("Disabled"));
     }
 
     @Override
@@ -60,6 +65,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
         logger.info("Test Successful for {}: ", context.getDisplayName());
         testResultsStatus.add(TestResultStatus.SUCCESSFUL);
         TestWatcher.super.testSuccessful(context);
+        this.markTestStatus(TestResultStatus.SUCCESSFUL.name(), "");
     }
 
     @Override
@@ -67,6 +73,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
         logger.info("Test Aborted for {}: ", context.getDisplayName());
         testResultsStatus.add(TestResultStatus.ABORTED);
         TestWatcher.super.testAborted(context, cause);
+        this.markTestStatus(TestResultStatus.ABORTED.name(), cause.getMessage());
     }
 
     @Override
@@ -74,6 +81,7 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
         logger.info("Test Failed for {}: ", context.getDisplayName());
         testResultsStatus.add(TestResultStatus.FAILED);
         TestWatcher.super.testFailed(context, cause);
+        this.markTestStatus(TestResultStatus.FAILED.name(), cause.getMessage());
     }
 
     private Method getTestMethodName(ExtensionContext context) {
@@ -86,5 +94,13 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
 
     private Store getStore(ExtensionContext context) {
         return context.getStore(ExtensionContext.Namespace.create(getClass(), context.getRequiredTestMethod()));
+    }
+
+    private void markTestStatus(String status, String reason) {
+        try {
+            seleniumFlow.getJsExecutor().executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"" + status + "\", \"reason\": \"" + reason + "\"}}");
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
     }
 }
