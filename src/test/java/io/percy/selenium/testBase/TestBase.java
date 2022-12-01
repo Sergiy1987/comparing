@@ -22,7 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Slf4j
-@ExtendWith({TestResultLoggerExtension.class})
+//@ExtendWith({TestResultLoggerExtension.class})
 public class TestBase {
     private static RemoteWebDriver driver;
     protected static Percy percy;
