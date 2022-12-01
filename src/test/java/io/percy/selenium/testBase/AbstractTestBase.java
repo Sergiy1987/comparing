@@ -13,6 +13,7 @@ import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -112,9 +113,11 @@ public class AbstractTestBase {
     public static String getScreenshotName(TestInfo testInfo, String platform, String platformVersion,
                                            String browserName, String browserVersion, String screenResolution,
                                            String deviceName) {
+        String testName = testInfo.getTestMethod().map(Method::getName).map(String::toString).orElse("");
+        String platformName = platform.replace(" ", "_");
         return StringUtils.isEmpty(deviceName) ?
-                testInfo.getDisplayName() + "_" + platform + "_" + platformVersion + "_" + browserName + "_" + browserVersion + "_" + screenResolution :
-                testInfo.getDisplayName() + "_" + platform + "_" + platformVersion + "_" + browserName + "_" + deviceName;
+                testName + "_" + platformName + "_" + platformVersion + "_" + browserName + "_" + browserVersion + "_" + screenResolution :
+                testName + "_" + platformName + "_" + platformVersion + "_" + browserName + "_" + deviceName;
     }
 
     @AfterAll
