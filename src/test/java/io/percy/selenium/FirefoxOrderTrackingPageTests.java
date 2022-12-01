@@ -2,13 +2,11 @@ package io.percy.selenium;
 
 import com.codeborne.selenide.Selenide;
 import io.percy.selenium.data.BrowserName;
-import io.percy.selenium.logger.TestResultLoggerExtension;
 import io.percy.selenium.testBase.TestBase;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,7 +16,6 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-@ExtendWith({TestResultLoggerExtension.class})
 public class FirefoxOrderTrackingPageTests extends TestBase {
     private TestInfo testInfo;
 

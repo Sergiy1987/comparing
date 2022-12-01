@@ -18,7 +18,6 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-//@ExtendWith({TestResultLoggerExtension.class})
 public class ChromeOrderTrackingPageTests extends TestBase {
     private TestInfo testInfo;
 

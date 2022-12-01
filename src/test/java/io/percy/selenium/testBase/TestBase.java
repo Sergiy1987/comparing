@@ -5,11 +5,13 @@ import com.codeborne.selenide.WebDriverRunner;
 import io.percy.selenium.Percy;
 import io.percy.selenium.core.properties.Properties;
 import io.percy.selenium.core.properties.PropertiesLoader;
+import io.percy.selenium.logger.TestResultLoggerExtension;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -19,9 +21,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Slf4j
+@ExtendWith({TestResultLoggerExtension.class})
 public abstract class TestBase {
     private static RemoteWebDriver driver;
-    //private static final List<RemoteWebDriver> driverList = new ArrayList<>();
     protected static Percy percy;
     //private static final String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
@@ -47,7 +49,6 @@ public abstract class TestBase {
             setConnectionForBrowserStack(hubUrl, mobileOptions);
         }
         Configuration.timeout = 10000;
-        //if (!driverList.contains(driver)) driverList.add(driver);
         WebDriverRunner.setWebDriver(driver);
         percy = new Percy(WebDriverRunner.getWebDriver());
         //Selenide.open(System.getProperty(Properties.STAGE_OT_URL));
@@ -129,7 +130,6 @@ public abstract class TestBase {
     protected void closeDriver() {
         if (driver != null) {
             driver.quit();
-            //driverList.forEach(RemoteWebDriver::quit);
             log.info("Quit!!!!");
         }
     }
