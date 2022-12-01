@@ -19,7 +19,6 @@ import java.net.URL;
 public class AbstractTestBase {
     protected static RemoteWebDriver driver;
     protected static Percy percy;
-    private static final String buildName = System.getenv("JENKINS_LABEL");
     //private static final String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
     public static void setUpDriver(String browserName, String platform,
@@ -54,7 +53,7 @@ public class AbstractTestBase {
         browserstackOptions.setCapability("os", platform);
         browserstackOptions.setCapability("osVersion", platformVersion);
         browserstackOptions.setCapability("projectName", testInfo.getDisplayName());
-        browserstackOptions.setCapability("buildName", "Visibility_testing");//buildName
+        browserstackOptions.setCapability("buildName", "Visibility_testing_"+platform);//buildName
         browserstackOptions.setCapability("sessionName", "Visibility_testing");
         browserstackOptions.setCapability("resolution", screenResolution);
         browserstackOptions.setCapability("local", "false");

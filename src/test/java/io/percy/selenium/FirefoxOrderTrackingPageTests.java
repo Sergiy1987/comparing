@@ -41,7 +41,7 @@ public class FirefoxOrderTrackingPageTests extends AbstractTestBase {
     @MethodSource(value = "browserParameters")
     @DisplayName(value = "takesLocalAppSnapshotWithProvidedName")
     @Step
-    public void takesLocalAppSnapshotWithProvidedName(String browserName, String platform,
+    public void orderTrackingPageTest(String browserName, String platform,
                                                       String platformVersion, String browserVersion,
                                                       String screenResolution, String deviceName) {
         //setEnv("PERCY_TOKEN", "daa6c215ff1261f935236c4084944d7dd076d48392588c0d34210791d1d51223");
