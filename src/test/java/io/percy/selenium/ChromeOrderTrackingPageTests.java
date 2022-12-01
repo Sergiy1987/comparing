@@ -7,7 +7,6 @@ import io.percy.selenium.testBase.TestBase;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
@@ -79,23 +78,23 @@ public class ChromeOrderTrackingPageTests extends TestBase implements TestWatche
 //        }
 //    }
 private enum TestResultStatus {
-    SUCCESSFUL, ABORTED, FAILED, DISABLED
+    PASSED, ABORTED, FAILED, DISABLED
 }
 
 @Override
-@Order(0)
+//@Order(0)
 public void testSuccessful(ExtensionContext context) {
     String testClass = this.getTestClassName(context).getSimpleName();
     String testMethod = this.getTestMethodName(context).getName();
     String testName = testClass + "." + testMethod + " " + context.getDisplayName();
-    this.markTestStatus(TestResultStatus.SUCCESSFUL.name(), TestResultStatus.SUCCESSFUL.name());
+    this.markTestStatus(TestResultStatus.PASSED.name(), TestResultStatus.PASSED.name());
     logger.info("Test Successful for {}: ", context.getDisplayName());
-    testResultsStatus.put(testName, TestResultStatus.SUCCESSFUL);
-    TestWatcher.super.testSuccessful(context);
+    testResultsStatus.put(testName, TestResultStatus.PASSED);
+    //TestWatcher.super.testSuccessful(context);
 }
 
     @Override
-    @Order(0)
+    //@Order(0)
     public void testAborted(ExtensionContext context, Throwable cause) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
@@ -107,7 +106,7 @@ public void testSuccessful(ExtensionContext context) {
     }
 
     @Override
-    @Order(0)
+    //@Order(0)
     public void testFailed(ExtensionContext context, Throwable cause) {
         String testClass = this.getTestClassName(context).getSimpleName();
         String testMethod = this.getTestMethodName(context).getName();
