@@ -21,8 +21,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Slf4j
-@ExtendWith({TestResultLoggerExtension.class})
-public abstract class TestBase {
+//@ExtendWith({TestResultLoggerExtension.class})
+public abstract class TestBase extends TestResultLoggerExtension {
     private static RemoteWebDriver driver;
     protected static Percy percy;
     //private static final String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
