@@ -35,7 +35,7 @@
             }
             stage('Install dependencies') {
                 steps {
-                    sh "npm install"
+                    //sh "npm install"
                     sh 'npm --version'
                     sh "npm install @percy/cli --save-dev"
                     sh "npm audit fix"
