@@ -41,7 +41,7 @@
                     sh "npm audit fix"
                 }
             }
-            stage('Visibility tests chrome') {
+            stage('Chrome') {
                 environment {
                     PERCY_TOKEN = "daa6c215ff1261f935236c4084944d7dd076d48392588c0d34210791d1d51223"
                 }
@@ -55,7 +55,7 @@
                     }
                 }
             }
-            stage('Visibility tests firefox') {
+            stage('Firefox') {
                 environment {
                     PERCY_TOKEN = "dc315d8613eecb02f7c659954d5f2d774be2306d3763ab6c6ab09865cf36413e"
                 }
@@ -64,6 +64,20 @@
                         sh "export PERCY_TOKEN=${PERCY_TOKEN}"
                         echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
                         sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -Dtest=FirefoxOrderTrackingPageTests'
+                        junit testDataPublishers: [[$class: 'AutomateTestDataPublisher']], testResults: 'target/surefire-reports/TEST-*.xml'
+                        browserStackReportPublisher 'automate'
+                    }
+                }
+            }
+            stage('Safari') {
+                environment {
+                    PERCY_TOKEN = "905596f919f1076c7234bda79a83a826d3aaa2966c5dfce949ac79ebc1d3b03e"
+                }
+                    steps {
+                        browserstack(credentialsId: 'ab16f137-f363-493e-a1ea-df3ff3d3edb3') {
+                        sh "export PERCY_TOKEN=${PERCY_TOKEN}"
+                        echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
+                        sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -Dtest=SafariOrderTrackingPageTests'
                         junit testDataPublishers: [[$class: 'AutomateTestDataPublisher']], testResults: 'target/surefire-reports/TEST-*.xml'
                         browserStackReportPublisher 'automate'
                     }
