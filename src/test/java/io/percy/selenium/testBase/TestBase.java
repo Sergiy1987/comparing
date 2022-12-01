@@ -10,7 +10,6 @@ import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.MutableCapabilities;
@@ -22,7 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Slf4j
-//@ExtendWith({TestResultLoggerExtension.class})
+@ExtendWith({TestResultLoggerExtension.class})
 public class TestBase {
     private static RemoteWebDriver driver;
     protected static Percy percy;
@@ -127,9 +126,8 @@ public class TestBase {
                 testName + "_" + platformName + "_" + platformVersion + "_" + browserName + "_" + deviceName;
     }
 
-    @AfterEach
-    @Order(2)
-    protected void closeDriver() {
+    //@AfterEach
+    public static void closeDriver() {
         if (driver != null) {
             driver.quit();
             log.info("Quit!!!!");

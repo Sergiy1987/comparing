@@ -1,6 +1,7 @@
 package io.percy.selenium.logger;
 
 import com.codeborne.selenide.WebDriverRunner;
+import io.percy.selenium.testBase.TestBase;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;
@@ -68,7 +69,8 @@ public class TestResultLoggerExtension implements TestWatcher, BeforeTestExecuti
         this.markTestStatus(TestResultStatus.SUCCESSFUL.name(), TestResultStatus.SUCCESSFUL.name());
         logger.info("Test Successful for {}: ", context.getDisplayName());
         testResultsStatus.put(testName, TestResultStatus.SUCCESSFUL);
-        TestWatcher.super.testSuccessful(context);
+        //TestWatcher.super.testSuccessful(context);
+        TestBase.closeDriver();
     }
 
     @Override
