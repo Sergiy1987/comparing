@@ -7,7 +7,7 @@ import io.percy.selenium.core.properties.Properties;
 import io.percy.selenium.core.properties.PropertiesLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.CapabilityType;
@@ -67,6 +67,7 @@ public class AbstractTestBase {
         browserstackOptions.setCapability("video", "false");
         browserstackOptions.setCapability("seleniumVersion", "4.1.0");
         browserstackOptions.setCapability("telemetryLogs", "true");
+        browserstackOptions.setCapability("browserstack.idleTimeout", "90");
         return browserstackOptions;
     }
 
@@ -120,8 +121,8 @@ public class AbstractTestBase {
                 testName + "_" + platformName + "_" + platformVersion + "_" + browserName + "_" + deviceName;
     }
 
-    @AfterAll
+    @AfterEach
     public static void closeDriver() {
-        WebDriverRunner.getWebDriver().quit();
+        if (driver != null) WebDriverRunner.getWebDriver().quit();
     }
 }
