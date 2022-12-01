@@ -9,7 +9,6 @@
         stages {
             stage('Clean workspace') {
                 steps {
-                    echo "BROWSERSTACK_BUILD_NAME = ${env.BROWSERSTACK_BUILD_NAME}"
                     //notifySlack()
                     echo "workspace directory is ${env.WORKSPACE}"
                     echo "build URL is ${env.BUILD_URL}"
