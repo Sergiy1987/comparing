@@ -46,7 +46,7 @@
                     PERCY_TOKEN = "bd8b497f4312c2ce03a53eb32e8e9199f50387483593239b2c0368f6fa155c3d"
                 }
                 steps {
-                        browserstack(credentialsId: 'ab16f137-f363-493e-a1ea-df3ff3d3edb3') {
+                        browserstack(credentialsId: 'browserstack') {
                         sh "export PERCY_TOKEN=${PERCY_TOKEN}"
                         echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
                         sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -Dtest=ChromeOrderTrackingPageTests'
@@ -60,7 +60,7 @@
                     PERCY_TOKEN = "8403c430db27447139b3271134176f1cc6db8a31223143d1b70af4aa2ddef133"
                 }
                     steps {
-                        browserstack(credentialsId: 'ab16f137-f363-493e-a1ea-df3ff3d3edb3') {
+                        browserstack(credentialsId: 'browserstack') {
                         sh "export PERCY_TOKEN=${PERCY_TOKEN}"
                         echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
                         sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -Dtest=FirefoxOrderTrackingPageTests'
@@ -74,7 +74,7 @@
                     PERCY_TOKEN = "c15768cbdd224d58651370e3304387ad2005411ce4322ea8e764c193fb037b37"
                 }
                     steps {
-                        browserstack(credentialsId: 'ab16f137-f363-493e-a1ea-df3ff3d3edb3') {
+                        browserstack(credentialsId: 'browserstack') {
                         sh "export PERCY_TOKEN=${PERCY_TOKEN}"
                         echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
                         sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -Dtest=SafariOrderTrackingPageTests'
