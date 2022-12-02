@@ -2,16 +2,15 @@ package io.percy.selenium.testBase;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import io.percy.selenium.Percy;
 import io.percy.selenium.core.properties.Properties;
 import io.percy.selenium.core.properties.PropertiesLoader;
-import io.percy.selenium.logger.TestResultLoggerExtension;
 import io.qameta.allure.Step;
+import io.qameta.allure.selenide.AllureSelenide;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -21,7 +20,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Slf4j
-@ExtendWith({TestResultLoggerExtension.class})
 public class TestBase {
     private static RemoteWebDriver driver;
     protected static Percy percy;
@@ -32,7 +30,7 @@ public class TestBase {
                                    String platformVersion, TestInfo testInfo,
                                    String browserVersion, String screenResolution, String deviceName) {
         PropertiesLoader.loadProperties();
-
+        selenideAllureLogger();
         String hubUrl = System.getProperty(Properties.BROWSER_STACK_USER_NAME) + ":" +
                 System.getProperty(Properties.BROWSER_STACK_API_KEY) + System.getProperty(Properties.BROWSER_STACK_HUB_URL);
         System.out.println("platformName = " + platform + ", browserName = " + browserName);
@@ -126,9 +124,16 @@ public class TestBase {
                 testName + "_" + platformName + "_" + platformVersion + "_" + browserName + "_" + deviceName;
     }
 
+    private static void selenideAllureLogger() {
+        SelenideLogger.addListener("AllureSelenideLogger", new AllureSelenide()
+                .screenshots(false)
+                .includeSelenideSteps(true)
+                .savePageSource(false));
+    }
     //@AfterEach
     public static void closeDriver() {
-        if (driver != null) {
+        SelenideLogger.removeListener("AllureSelenideLogger");
+        if (driver != null | WebDriverRunner.webdriverContainer.hasWebDriverStarted()) {
             driver.quit();
             log.info("Quit!!!!");
         }
