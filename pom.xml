@@ -345,7 +345,7 @@
     </build>
     <profiles>
     <profile>
-        <id>on-prem</id>
+        <id>chrome</id>
         <build>
             <plugins>
                 <plugin>
