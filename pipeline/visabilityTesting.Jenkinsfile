@@ -48,6 +48,7 @@
                         browserstack(credentialsId: 'browserstack') {
                         sh "export PERCY_TOKEN=${PERCY_TOKEN}"
                         echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
+                        sh "mvn install -DskipTests"
                         sh 'export PERCY_TOKEN=${PERCY_TOKEN} & mvn clean test -P chrome -Dtest=ChromeOrderTrackingPageTestsTestNg'//-P chrome
                         junit testDataPublishers: [[$class: 'AutomateTestDataPublisher']], testResults: 'target/surefire-reports/TEST-*.xml'
                         browserStackReportPublisher 'automate'
