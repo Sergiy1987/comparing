@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="[Demo] Cross Browser Testing Using Selenium">
+    <test name="[LambdaTest] Test Scenario - 1">
+        <parameter name="browserName" value="Chrome"/>
+        <parameter name="browserVersion" value="latest"/>
+        <parameter name="platform" value="Windows"/>
+        <parameter name="platformVersion" value="10"/>
+        <parameter name="screenResolution" value="1280x1024"/>
+        <parameter name="deviceName" value=""/>
+        <classes>
+            <class name="io.percy.selenium.ChromeOrderTrackingPageTestsTestNg"/>
+        </classes>
+    </test>
+</suite>
