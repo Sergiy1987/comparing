@@ -3,6 +3,7 @@ package io.percy.selenium.testBase;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import io.percy.selenium.ChromeWindowsTestNgTests;
 import io.percy.selenium.Percy;
 import io.percy.selenium.core.properties.Properties;
 import io.percy.selenium.core.properties.PropertiesLoader;
@@ -33,11 +34,6 @@ import java.util.Map;
 public class TestBaseTestNg {
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     protected Percy percy;
-    private Method method;
-
-    @BeforeMethod
-    protected void init(Method method) { this.method = method; }
-    //private static final String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
     @Step
     @BeforeClass
@@ -63,7 +59,7 @@ public class TestBaseTestNg {
             browserStackCaps.put("os", platform.get("os"));//no
             browserStackCaps.put("osVersion", platform.get("osVersion"));//no
             browserStackCaps.put("resolution", screenResolution);//yes
-            browserStackCaps.put("projectName", method.getName());
+            browserStackCaps.put("projectName", ChromeWindowsTestNgTests.method.getName());
             browserStackCaps.put("buildName", "Visibility_testing_" + platformName + "_" + browserName);
             browserStackCaps.put("sessionName", "Visibility_testing_" + platformName + "_" + browserName);
 
