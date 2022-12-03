@@ -49,7 +49,7 @@
                         sh "export PERCY_TOKEN=${PERCY_TOKEN}"
                         echo "PERCY_TOKEN = ${env.PERCY_TOKEN}"
                         //sh 'mvn install -DskipTests'
-                        sh 'export PERCY_TOKEN=${PERCY_TOKEN} & percy exec -- mvn test -P Windows_10_Chrome'//-P chrome
+                        sh 'export PERCY_TOKEN=${PERCY_TOKEN} & npx percy exec -- mvn test -P Windows_10_Chrome'//-P chrome
                         junit testDataPublishers: [[$class: 'AutomateTestDataPublisher']], testResults: 'target/surefire-reports/TEST-*.xml'
                         browserStackReportPublisher 'automate'
                     }
