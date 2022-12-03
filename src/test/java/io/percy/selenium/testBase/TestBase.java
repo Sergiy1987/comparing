@@ -133,7 +133,7 @@ public class TestBase {
     //@AfterEach
     public static void closeDriver() {
         SelenideLogger.removeListener("AllureSelenideLogger");
-        if (driver != null | WebDriverRunner.webdriverContainer.hasWebDriverStarted()) {
+        if (driver != null) {
             driver.quit();
             log.info("Quit!!!!");
         }

@@ -32,7 +32,7 @@ public class SafariOrderTrackingPageTests extends TestBase {
         );
     }
 
-    @ParameterizedTest(name = "Run {index}: {1} {2}, {0} {3}, {4}{5}")
+    //@ParameterizedTest(name = "Run {index}: {1} {2}, {0} {3}, {4}{5}")
     @MethodSource(value = "browserParameters")
     @DisplayName(value = "orderTrackingPageTest")
     @Step

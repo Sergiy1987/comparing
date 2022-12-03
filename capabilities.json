@@ -1,0 +1,42 @@
+{
+  "Chrome": {
+    "browserName": "Chrome",
+    "browserVersion": "latest"
+  },
+  "Firefox": {
+    "browserName": "Firefox",
+    "browserVersion": "latest"
+  },
+  "Safari": {
+    "browserName": "Safari",
+    "browserVersion": "latest"
+  },
+  "Windows_10": {
+    "os": "Windows",
+    "osVersion": "10"
+  },
+  "Windows_11": {
+    "os": "Windows",
+    "osVersion": "11"
+  },
+  "OS_X": {
+    "os": "OS_X",
+    "osVersion": "Ventura"
+  },
+  "bstack:options_web": {
+    "os": "Windows",
+    "osVersion": "10",
+    "projectName": "",
+    "buildName": "",
+    "sessionName": "",
+    "resolution": "1280x1024",
+    "local": "false",
+    "debug": "true",
+    "consoleLogs": "info",
+    "networkLogs": "true",
+    "video": "false",
+    "seleniumVersion": "4.1.0",
+    "telemetryLogs": "true",
+    "idleTimeout": "90"
+  }
+}
