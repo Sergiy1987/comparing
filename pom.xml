@@ -258,6 +258,10 @@
                             <value>io.qameta.allure.selenide.AllureSelenide</value>
                         </property>
                     </properties>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                        <allure.link.issue.pattern>https://route4me.atlassian.net/browse/{}</allure.link.issue.pattern>
+                    </systemPropertyVariables>
                 </configuration>
                 <dependencies>
 <!--                    <dependency>-->
