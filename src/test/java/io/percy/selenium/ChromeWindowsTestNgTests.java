@@ -14,12 +14,12 @@ import java.util.Arrays;
 @Slf4j
 @Listeners({BrowserStackTestStatusListener.class})
 public class ChromeWindowsTestNgTests extends TestBaseTestNg {
-    public static Method method;
+    private Method method;
     //private final BrowserFlow browserFlow = new BrowserFlow();
 
     @BeforeMethod
     protected void init(Method method) {
-        ChromeWindowsTestNgTests.method = method;
+        this.method = method;
     }
 
     @DataProvider(name = "browserParameters")
@@ -28,7 +28,6 @@ public class ChromeWindowsTestNgTests extends TestBaseTestNg {
                 new Object[]{BrowserName.Chrome.name(), "latest", "Windows_10", "1280x1024", ""}
         };
     }
-
 
     @Step
     @Test(dataProvider = "browserParameters")

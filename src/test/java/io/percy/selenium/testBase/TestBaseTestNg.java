@@ -3,7 +3,6 @@ package io.percy.selenium.testBase;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import io.percy.selenium.ChromeWindowsTestNgTests;
 import io.percy.selenium.Percy;
 import io.percy.selenium.core.properties.Properties;
 import io.percy.selenium.core.properties.PropertiesLoader;
@@ -19,7 +18,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import utils.ConvertUtils;
 
@@ -59,7 +57,7 @@ public class TestBaseTestNg {
             browserStackCaps.put("os", platform.get("os"));//no
             browserStackCaps.put("osVersion", platform.get("osVersion"));//no
             browserStackCaps.put("resolution", screenResolution);//yes
-            browserStackCaps.put("projectName", ChromeWindowsTestNgTests.method.getName());
+            //browserStackCaps.put("projectName", ChromeWindowsTestNgTests.method.getName());
             browserStackCaps.put("buildName", "Visibility_testing_" + platformName + "_" + browserName);
             browserStackCaps.put("sessionName", "Visibility_testing_" + platformName + "_" + browserName);
 
