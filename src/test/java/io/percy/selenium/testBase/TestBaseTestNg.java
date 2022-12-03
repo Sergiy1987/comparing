@@ -18,6 +18,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import utils.ConvertUtils;
 
@@ -32,6 +33,10 @@ import java.util.Map;
 public class TestBaseTestNg {
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     protected Percy percy;
+    private Method method;
+
+    @BeforeMethod
+    protected void init(Method method) { this.method = method; }
     //private static final String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
     @Step
@@ -39,7 +44,7 @@ public class TestBaseTestNg {
     @Parameters({"browserName", "platformName", "screenResolution"})
     public void setUpDriver(String browserName,
                             String platformName,
-                            String screenResolution, Method method) throws IOException, ParseException {
+                            String screenResolution) throws IOException, ParseException {
         //TestInfo testInfo)
         //String deviceName)
 
