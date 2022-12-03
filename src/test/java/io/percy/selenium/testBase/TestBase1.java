@@ -28,7 +28,6 @@ import java.net.URL;
 import java.util.Map;
 
 @Slf4j
-@ExtendWith(ParameterAnnotationParameterResolver.class)
 public class TestBase1 {
     private static RemoteWebDriver driver;
     protected static Percy percy;
