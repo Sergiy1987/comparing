@@ -234,7 +234,7 @@
                 <configuration>
                     <!-- Workaround for issue encountered in CI. -->
                     <!-- https://stackoverflow.com/questions/53010200/maven-surefire-could-not-find-forkedbooter-class-->
-                    <useSystemClassLoader>false</useSystemClassLoader>
+<!--                    <useSystemClassLoader>false</useSystemClassLoader>-->
                     <testFailureIgnore>true</testFailureIgnore>
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
@@ -243,10 +243,10 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
                     <systemProperties>
-                        <property>
-                            <name>junit.jupiter.extensions.autodetection.enabled</name>
-                            <value>true</value>
-                        </property>
+<!--                        <property>-->
+<!--                            <name>junit.jupiter.extensions.autodetection.enabled</name>-->
+<!--                            <value>true</value>-->
+<!--                        </property>-->
                         <property>
                             <name>allure.results.directory</name>
                             <value>${basedir}/target/allure-results</value>
@@ -260,11 +260,11 @@
                     </properties>
                 </configuration>
                 <dependencies>
-                    <dependency>
-                        <groupId>org.junit.platform</groupId>
-                        <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.2.0</version>
-                    </dependency>
+<!--                    <dependency>-->
+<!--                        <groupId>org.junit.platform</groupId>-->
+<!--                        <artifactId>junit-platform-surefire-provider</artifactId>-->
+<!--                        <version>1.2.0</version>-->
+<!--                    </dependency>-->
                     <dependency>
                         <groupId>org.aspectj</groupId>
                         <artifactId>aspectjweaver</artifactId>
