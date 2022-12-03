@@ -1,6 +1,6 @@
 package io.percy.selenium;
 
-import io.percy.selenium.logger.TestResultLoggerExtension;
+import io.percy.selenium.listener.TestResultLoggerExtension;
 
 public class VisualMobilePlatformTests extends TestResultLoggerExtension {
 /*

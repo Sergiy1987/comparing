@@ -1,4 +1,4 @@
-package io.percy.selenium.logger;
+package io.percy.selenium.listener;
 
 import com.codeborne.selenide.WebDriverRunner;
 import io.percy.selenium.testBase.TestBase;

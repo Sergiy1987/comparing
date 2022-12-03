@@ -2,7 +2,7 @@ package io.percy.selenium;
 
 import com.codeborne.selenide.Selenide;
 import io.percy.selenium.data.BrowserName;
-import io.percy.selenium.logger.TestResultLoggerExtension;
+import io.percy.selenium.listener.TestResultLoggerExtension;
 import io.percy.selenium.testBase.TestBase1;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;

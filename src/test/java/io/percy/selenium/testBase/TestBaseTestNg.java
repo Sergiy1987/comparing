@@ -79,7 +79,7 @@ public class TestBaseTestNg {
         //Selenide.open(System.getProperty(Properties.STAGE_OT_URL));
     }
 
-    private WebDriver getDriver() { return driver.get(); }
+    public WebDriver getDriver() { return driver.get(); }
 
     private void setConnectionForBrowserStack(String hubUrl, MutableCapabilities deviceOptions) {
         try {
