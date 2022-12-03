@@ -39,7 +39,7 @@ public class TestBaseTestNg {
     @Parameters({"browserName", "platformName", "screenResolution"})
     public void setUpDriver(String browserName,
                             String platformName,
-                            String screenResolution) throws IOException, ParseException {
+                            String screenResolution, Method method) throws IOException, ParseException {
         //TestInfo testInfo)
         //String deviceName)
 
@@ -58,7 +58,7 @@ public class TestBaseTestNg {
             browserStackCaps.put("os", platform.get("os"));//no
             browserStackCaps.put("osVersion", platform.get("osVersion"));//no
             browserStackCaps.put("resolution", screenResolution);//yes
-            //browserStackCaps.put("projectName", testInfo.getDisplayName());
+            browserStackCaps.put("projectName", method.getName());
             browserStackCaps.put("buildName", "Visibility_testing_" + platformName + "_" + browserName);
             browserStackCaps.put("sessionName", "Visibility_testing_" + platformName + "_" + browserName);
 

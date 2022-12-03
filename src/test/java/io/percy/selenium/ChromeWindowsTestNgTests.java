@@ -24,7 +24,7 @@ public class ChromeWindowsTestNgTests extends TestBaseTestNg {
 
     @DataProvider(name = "browserParameters")
     public Object[][] browserParameters() {
-        return new Object[][]{
+        return new Object[][] {
                 new Object[]{BrowserName.Chrome.name(), "latest", "Windows_10", "1280x1024", ""}
         };
     }
