@@ -65,16 +65,24 @@ public class ChromeWindowsTestNgTests extends TestBaseTestNg {
 //            .clickOnOrderTrackingButton();
 //    Selenide.sleep(5000);
     }
-//    public static void setEnv(String key, String value) {
-//        try {
-//            Map<String, String> env = System.getenv();
-//            Class<?> cl = env.getClass();
-//            Field field = cl.getDeclaredField("m");
-//            field.setAccessible(true);
-//            Map<String, String> writableEnv = (Map<String, String>) field.get(env);
-//            writableEnv.put(key, value);
-//        } catch (Exception e) {
-//            throw new IllegalStateException("Failed to set environment variable", e);
-//        }
-//    }
+
+    @Step
+    @Test(dataProvider = "browserParameters")
+    @Parameters({"browserName", "browserVersion", "platformName", "screenResolution", "deviceName"})
+    public void orderTrackingPageTest1(String browserName, String browserVersion,
+                                      String platformName, String screenResolution, String deviceName) {
+
+        String screenshotName = TestBaseTestNg.getScreenshotName(browserName, browserVersion, platformName, screenResolution, deviceName, this.method);
+        System.out.println("screenshotName = " + screenshotName);
+        //TestBase1.setUpDriver(browserName, platformName, screenResolution);
+        Selenide.open("https://www.browserstack.com/");
+        Selenide.sleep(5000);
+        //percy = new Percy(WebDriverRunner.getWebDriver());
+        percy.snapshot(screenshotName+"1", Arrays.asList(1280, 768, 375), 1024, true);
+//    atOrderTrackingPage()
+//            .openOrderTrackingPage(OrderTrackingElements.class)
+//            .setOrderIntoInputField("12")
+//            .clickOnOrderTrackingButton();
+//    Selenide.sleep(5000);
+    }
 }
