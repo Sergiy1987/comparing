@@ -59,7 +59,7 @@ public class ChromeWindowsTestNgTests extends TestBaseTestNg {
         System.out.println("screenshotName = " + screenshotName);
         //TestBase1.setUpDriver(browserName, platformName, screenResolution);
         Selenide.open("https://www.browserstack.com/");
-        Selenide.sleep(5000);
+        //Selenide.sleep(5000);
         //percy = new Percy(WebDriverRunner.getWebDriver());
         percy.snapshot(screenshotName+"1", Arrays.asList(1280, 768, 375), 1024, true);
 //    atOrderTrackingPage()
